@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 
-// Importing algorithms
-
-// Importing components
-
 const DisplayWindow = () => {
-    // States
     const temp = new Array(20);
 
     for (let index = 0; index < temp.length; index++) {
         temp[index] = Math.floor(Math.random() * 500) + 50;
     }
 
+    // States
     const [delay_time, setDelayTime] = useState(300);
     const [len, setLength] = useState(20);
     const [values, setValues] = useState(temp);
@@ -83,7 +79,7 @@ const DisplayWindow = () => {
             }
         }
         setSortedCandle(0);
-        delayer = await delay(500);
+        delayer = await delay(1000);
         setSortedCandle(values.length);
     };
 
@@ -114,7 +110,7 @@ const DisplayWindow = () => {
                     defaultValue={values.length}
                     onChange={changeLength}
                 ></input>
-                <p>Speed {delay_time}</p>
+                <p>Delay {delay_time}</p>
                 <input
                     type="range"
                     min="0"

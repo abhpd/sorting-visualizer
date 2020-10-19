@@ -20,11 +20,13 @@
 }
 
 .DisplayWindow {
+    margin-top: 20px;
     height: 90vh;
     background-color: white;
 }
 
 .candles {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
 }
