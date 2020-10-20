@@ -27,6 +27,13 @@ const DisplayWindow = () => {
         setDelayTime(e.target.value);
     }
 
+    function disableInputs(value) {
+        const inputs = document.querySelectorAll(".inputs");
+        inputs.forEach((x) => {
+            x.disabled = value;
+        });
+    }
+
     const randomizeValues = () => {
         const temp2 = new Array(Number(len));
         for (let index = 0; index < temp2.length; index++) {
@@ -52,6 +59,7 @@ const DisplayWindow = () => {
     }
 
     const bubbleSort_timed = async () => {
+        disableInputs(true);
         for (let i = 0; i < values.length; i++) {
             var no_swap = true;
             for (let j = 0; j < values.length - 1 - i; j++) {
@@ -81,6 +89,7 @@ const DisplayWindow = () => {
         setSortedCandle(0);
         delayer = await delay(1000);
         setSortedCandle(values.length);
+        disableInputs(false);
     };
 
     function color(indx) {
@@ -104,6 +113,7 @@ const DisplayWindow = () => {
             <div className="ControlWindow">
                 <p>Length {len} </p>
                 <input
+                    className="inputs"
                     type="range"
                     min="5"
                     max="100"
@@ -112,6 +122,7 @@ const DisplayWindow = () => {
                 ></input>
                 <p>Delay {delay_time}</p>
                 <input
+                    className="inputs"
                     type="range"
                     min="0"
                     max="1500"
@@ -119,13 +130,13 @@ const DisplayWindow = () => {
                     onChange={changeSpeed}
                 ></input>
                 <button
-                    className="btn btn-outline-dark"
+                    className="btn btn-outline-dark inputs"
                     onClick={randomizeValues}
                 >
                     Randomize
                 </button>
                 <button
-                    className="btn btn-outline-dark"
+                    className="btn btn-outline-dark inputs"
                     onClick={bubbleSort_timed}
                 >
                     Sort
