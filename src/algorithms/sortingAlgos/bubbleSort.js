@@ -1,15 +1,8 @@
 import { updateArray } from "./../../redux/actions/updateArray";
-
-// delayer
-function delay(delayInms) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(1);
-        }, delayInms);
-    });
-}
+import { delay } from "./../helpers/delayer";
 
 const bubbleSort = async (
+    delay_time,
     array,
     sortedCandle,
     compareCandle,
@@ -26,13 +19,13 @@ const bubbleSort = async (
         for (let j = 0; j < newArr.length - i - 1; j++) {
             compareCandle([j, j + 1]);
             dispatch(updateArray({ arr: newArr.map((e) => e) }));
-            await delay(10);
+            await delay(delay_time);
 
             if (newArr[j] > newArr[j + 1]) {
                 compareCandle([-1, -1]);
                 compareCandleNotOk([j, j + 1]);
                 dispatch(updateArray({ arr: newArr.map((e) => e) }));
-                await delay(10);
+                await delay(delay_time);
 
                 no_swap = false;
                 [newArr[j], newArr[j + 1]] = [newArr[j + 1], newArr[j]];
@@ -43,7 +36,7 @@ const bubbleSort = async (
             compareCandle([-1, -1]);
             compareCandleOk([j, j + 1]);
             dispatch(updateArray({ arr: newArr.map((e) => e) }));
-            await delay(10);
+            await delay(delay_time);
             compareCandleOk([-1, -1]);
         }
 

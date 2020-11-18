@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 //Importing Helpers
-import randomizer from './../algorithms/helpers/randomizer'
+import randomizer from './../algorithms/helpers/randomizer';
 
 
 //Improting sorting Algorithms
-import bubbleSort from './../algorithms/sortingAlgos/bubbleSort'
+import bubbleSort from './../algorithms/sortingAlgos/bubbleSort';
 
 
 //Importing actions
-import { updateArray } from './../redux/actions/updateArray'
+import { updateArray } from './../redux/actions/updateArray';
+import { updateDelay } from './../redux/actions/delay';
 
 import {
     updateSortedCandle,
@@ -31,6 +32,7 @@ class ControlWindow extends Component {
         this.randomizeHandler = this.randomizeHandler.bind(this);
         this.arrayLengthHandler = this.arrayLengthHandler.bind(this);
         this.sortClickHandler = this.sortClickHandler.bind(this);
+        this.delayHandler = this.delayHandler.bind(this);
     }
 
     randomizeHandler(){
@@ -51,8 +53,15 @@ class ControlWindow extends Component {
         this.props.sortedCandle(newLength);
     }
 
+    delayHandler(event){
+        const newDelay = 550 - Number(event.target.value);
+        this.props.updateDelay(newDelay);
+        console.log(this.props.delay);
+    }
+
     sortClickHandler(){
         this.props.sort(
+            this.props.delay,
             this.props.arr,
             this.props.sortedCandle,
             this.props.compareCandle,
@@ -76,11 +85,11 @@ class ControlWindow extends Component {
                 <input 
                 className='inputs'
                     type='range' 
-                    min='10' 
-                    max='50' 
-                    defaultValue='20' 
-                    onChange={this.arrayLengthHandler}
-                    onClick={this.arrayLengthHandler}
+                    min='50' 
+                    max='500' 
+                    defaultValue={this.props.delay} 
+                    onChange={this.delayHandler}
+                    onClick={this.delayHandler}
                 ></input>
                 <button 
                     className='btn btn-outline-dark' 
@@ -98,6 +107,7 @@ class ControlWindow extends Component {
 const mapStateToProps = (state) => {
     return {
         arr: state.arrayReducer.arr,
+        delay: state.delayReducer,
     }
 }
 
@@ -107,13 +117,17 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(updateArray({arr:newArr}));
         },
 
-        sort : (array,
+        updateDelay : (value) => {
+            dispatch(updateDelay(value));
+        },
+
+        sort : (delay, array,
                 sortedCandle,
                 compareCandle,
                 compareCandleOk,
                 compareCandleNotOk
             ) => {
-            bubbleSort(array, 
+            bubbleSort(delay, array, 
                 sortedCandle,
                 compareCandle,
                 compareCandleOk,
