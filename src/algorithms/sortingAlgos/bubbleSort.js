@@ -2,6 +2,7 @@ import { updateArray } from "./../../redux/actions/updateArray";
 import { delay } from "./../helpers/delayer";
 
 const bubbleSort = async (
+    updateRunning,
     delay_time,
     array,
     sortedCandle,
@@ -10,6 +11,8 @@ const bubbleSort = async (
     compareCandleNotOk,
     dispatch
 ) => {
+    updateRunning(true);
+
     var newArr = [...array];
     console.log("hello");
     console.log(newArr);
@@ -52,6 +55,8 @@ const bubbleSort = async (
     sortedCandle(newArr.length);
     dispatch(updateArray({ arr: newArr.map((e) => e) }));
     console.log(newArr);
+
+    updateRunning(false);
 };
 
 export default bubbleSort;

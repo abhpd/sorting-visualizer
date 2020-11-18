@@ -6,6 +6,7 @@
 .ControlWindow {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 15px;
     height: 10vh;
     background-color: white;
@@ -17,6 +18,10 @@
 
 .ControlWindow input {
     margin: 20px;
+}
+
+.ControlWindow h6 {
+    margin: 10px;
 }
 
 .DisplayWindow {

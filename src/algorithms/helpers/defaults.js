@@ -2,4 +2,4 @@
 export const defaultArrayLength = 20;
 
 //Default delay
-export const defaultDelay = 400;
+export const defaultDelay = Number(400);
