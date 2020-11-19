@@ -7,19 +7,17 @@ import randomizer from './../algorithms/helpers/randomizer';
 
 //Improting sorting Algorithms
 import bubbleSort from './../algorithms/sortingAlgos/bubbleSort';
+import { bubbleSortDispatcher } from "./../redux/dispatchers/bubbleSortDispatcher";
+
+import selectionSort from './../algorithms/sortingAlgos/selectionSort';
+import { selectionSortDispatcher } from "./../redux/dispatchers/selectionSortDispatcher"
 
 
 //Importing actions
 import { updateArray } from './../redux/actions/updateArray';
 import { updateRunning } from '../redux/actions/updateRunning';
 import { updateDelay } from './../redux/actions/delay';
-
-import {
-    updateSortedCandle,
-    updateCompareCandle,
-    updateCompareCandleOk,
-    updateCompareCandleNotOk
-} from "./../redux/actions/bubbleSort"
+import { updateAlgo } from './../redux/actions/updateAlgo';
 
 
 class ControlWindow extends Component {
@@ -33,6 +31,7 @@ class ControlWindow extends Component {
         this.arrayLengthHandler = this.arrayLengthHandler.bind(this);
         this.sortClickHandler = this.sortClickHandler.bind(this);
         this.delayHandler = this.delayHandler.bind(this);
+        this.handleAlgoSelect = this.handleAlgoSelect.bind(this);
     }
 
     randomizeHandler(){
@@ -49,8 +48,13 @@ class ControlWindow extends Component {
         console.log(newLength);
         this.randomizeHandler();
 
-        //bubbleSort
-        this.props.sortedCandle(newLength);
+        //bubbleSort sorted color hardcode
+        if(this.props.currentAlgo==="bubbleSort"){
+            this.props.bubbleSort.sortedCandle(newLength);
+        } else {
+            this.props.selectionSort.sortedCandle(-1);
+        }
+        // this.props.bubbleSort.sortedCandle(newLength);
     }
 
     delayHandler(event){
@@ -60,16 +64,37 @@ class ControlWindow extends Component {
         console.log(this.props.delay);
     }
 
+    handleAlgoSelect(event){
+        this.props.updateAlgo(event.target.value);
+    }
+
     async sortClickHandler(){
-        this.props.sort(
-            this.props.updateRunning,
-            this.props.delay,
-            this.props.arr,
-            this.props.sortedCandle,
-            this.props.compareCandle,
-            this.props.compareCandleOk,
-            this.props.compareCandleNotOk
-        );
+        switch(this.props.currentAlgo){
+            case "bubbleSort":
+                this.props.runBubbleSort(
+                    this.props.updateRunning,
+                    this.props.delay,
+                    this.props.arr,
+                    this.props.bubbleSort.sortedCandle,
+                    this.props.bubbleSort.compareCandle,
+                    this.props.bubbleSort.compareCandleOk,
+                    this.props.bubbleSort.compareCandleNotOk
+                );
+            break;
+            case "selectionSort":
+                this.props.runSelectionSort(
+                    this.props.updateRunning,
+                    this.props.delay,
+                    this.props.arr,
+                    this.props.selectionSort.sortedCandle,
+                    this.props.selectionSort.compareCandle,
+                    this.props.selectionSort.compareCandleOk,
+                    this.props.selectionSort.compareCandleNotOk
+                );
+            break;
+            default:
+                console.log("Algo name error");
+        }
     }
 
     render() {
@@ -86,6 +111,7 @@ class ControlWindow extends Component {
                     onClick={this.arrayLengthHandler}
                     disabled = {this.props.isAlgoRunning}
                 ></input>
+
                 <h6>Speed: {610-Number(this.props.delay)}</h6>
                 <input 
                     className='inputs'
@@ -97,15 +123,24 @@ class ControlWindow extends Component {
                     onClick={this.delayHandler}
                     disabled = {this.props.isAlgoRunning}
                 ></input>
+
                 <button 
                     className='btn btn-outline-dark' 
                     onClick={this.randomizeHandler}
                     disabled = {this.props.isAlgoRunning}
                 >Randomize</button>
+
+                <select name="Algorithm" disabled={this.props.isAlgoRunning} onChange={this.handleAlgoSelect}>
+                    <option value="none" selected disabled hidden>Choose Algorithm</option>
+                    <option value="bubbleSort">Bubble Sort</option>
+                    <option value="selectionSort">Selection Sort</option>
+                    <option value="insertionSort">Insertion Sort</option>
+                </select>
+
                 <button 
                     className='btn btn-outline-dark' 
                     onClick={this.sortClickHandler}
-                    disabled = {this.props.isAlgoRunning}
+                    disabled = {this.props.isAlgoRunning||(this.props.currentAlgo==="none")}
                 >Sort</button>
             </div>
         );
@@ -117,6 +152,7 @@ const mapStateToProps = (state) => {
         arr: state.arrayReducer.arr,
         delay: state.delayReducer,
         isAlgoRunning: state.arrayReducer.isAlgoRunning,
+        currentAlgo: state.arrayReducer.currentAlgo
     }
 }
 
@@ -134,34 +170,41 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(updateDelay(value));
         },
 
-        sort : (updateRunning, delay, array,
+        updateAlgo : (algo) => {
+            dispatch(updateAlgo(algo));
+        },
+
+        //Bubble Sort
+        runBubbleSort : (updateRunning, delay, array,
                 sortedCandle,
                 compareCandle,
                 compareCandleOk,
                 compareCandleNotOk
             ) => {
-            bubbleSort(updateRunning, delay, array, 
+            bubbleSort(updateRunning, delay, array, dispatch,
                 sortedCandle,
                 compareCandle,
                 compareCandleOk,
-                compareCandleNotOk,
-                dispatch
+                compareCandleNotOk
             );
         },
+        bubbleSort: bubbleSortDispatcher(dispatch),
 
-        //bubbleSort
-        sortedCandle : (value) => {
-            dispatch(updateSortedCandle(value));
+        //Selection Sort
+        runSelectionSort : (updateRunning, delay, array,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            ) => {
+            selectionSort(updateRunning, delay, array, dispatch,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            );
         },
-        compareCandle : (value) => {
-            dispatch(updateCompareCandle(value));
-        },
-        compareCandleOk : (value) => {
-            dispatch(updateCompareCandleOk(value));
-        },
-        compareCandleNotOk : (value) => {
-            dispatch(updateCompareCandleNotOk(value));
-        }
+        selectionSort: selectionSortDispatcher(dispatch),
     }
 }
 

@@ -9,19 +9,39 @@ class DisplayWindow extends Component {
     }
 
     color(indx) {
-        // Set Colors
-        if (indx >= this.props.sortedCandle) {
-            return "blue";
-        } else if (
-            indx === this.props.compareCandleNotOk[0] ||
-            indx === this.props.compareCandleNotOk[1]
-        ) {
-            return "red";
-        } else if (indx === this.props.compareCandleOk[0] || indx === this.props.compareCandleOk[1]) {
-            return "green";
-        } else if (indx === this.props.compareCandle[0] || indx === this.props.compareCandle[1]) {
-            return "DodgerBlue";
-        } else return "DarkSlateGray";
+        switch(this.props.currentAlgo){
+
+            case "bubbleSort":
+                if (indx >= this.props.bubbleSort.sortedCandle) {
+                    return "blue";
+                } else if (
+                    indx === this.props.bubbleSort.compareCandleNotOk[0] ||
+                    indx === this.props.bubbleSort.compareCandleNotOk[1]
+                ) {
+                    return "red";
+                } else if (indx === this.props.bubbleSort.compareCandleOk[0] || indx === this.props.bubbleSort.compareCandleOk[1]) {
+                    return "green";
+                } else if (indx === this.props.bubbleSort.compareCandle[0] || indx === this.props.bubbleSort.compareCandle[1]) {
+                    return "DodgerBlue";
+                } else return "DarkSlateGray";
+            
+            case "selectionSort":
+                if (indx <= this.props.selectionSort.sortedCandle) {
+                    return "blue";
+                } else if (
+                    indx === this.props.selectionSort.compareCandleNotOk[0] ||
+                    indx === this.props.selectionSort.compareCandleNotOk[1]
+                ) {
+                    return "red";
+                } else if (indx === this.props.selectionSort.compareCandleOk[0] || indx === this.props.selectionSort.compareCandleOk[1]) {
+                    return "green";
+                } else if (indx === this.props.selectionSort.compareCandle[0] || indx === this.props.selectionSort.compareCandle[1]) {
+                    return "DodgerBlue";
+                } else return "DarkSlateGray";
+
+            default:
+                return "DarkSlateGray";
+        }
     }
 
     render() {
@@ -48,12 +68,21 @@ class DisplayWindow extends Component {
 const mapStateToProps = (state) => {
     return {
         arr: state.arrayReducer.arr,
+        currentAlgo: state.arrayReducer.currentAlgo,
 
-        //bubbleSort
-        compareCandle: state.bubbleReducer.compareCandle,
-        compareCandleOk: state.bubbleReducer.compareCandleOk,
-        compareCandleNotOk: state.bubbleReducer.compareCandleNotOk,
-        sortedCandle: state.bubbleReducer.sortedCandle,
+        bubbleSort: {
+            compareCandle: state.bubbleReducer.compareCandle,
+            compareCandleOk: state.bubbleReducer.compareCandleOk,
+            compareCandleNotOk: state.bubbleReducer.compareCandleNotOk,
+            sortedCandle: state.bubbleReducer.sortedCandle,
+        },
+
+        selectionSort: {
+            compareCandle: state.selectionReducer.compareCandle,
+            compareCandleOk: state.selectionReducer.compareCandleOk,
+            compareCandleNotOk: state.selectionReducer.compareCandleNotOk,
+            sortedCandle: state.selectionReducer.sortedCandle,
+        }
     }
 }
 

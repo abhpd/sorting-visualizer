@@ -9,7 +9,8 @@
     align-items: center;
     padding: 15px;
     height: 10vh;
-    background-color: white;
+    background-color: lightgrey;
+    overflow-y: scroll;
 }
 
 .ControlWindow button {
@@ -24,8 +25,23 @@
     margin: 10px;
 }
 
+.ControlWindow select {
+    text-align: center;
+    margin: 5px;
+    padding: 5px;
+    height: 38px;
+    width: 160px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 5px;
+}
+.ControlWindow select:hover {
+    box-shadow: 1px 1px 5px black;
+}
+
 .DisplayWindow {
-    margin-top: 20px;
+    margin-top: 40px;
     height: 80vh;
     background-color: white;
 }

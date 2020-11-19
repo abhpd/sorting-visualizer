@@ -5,16 +5,16 @@ const bubbleSort = async (
     updateRunning,
     delay_time,
     array,
+    dispatch,
     sortedCandle,
     compareCandle,
     compareCandleOk,
-    compareCandleNotOk,
-    dispatch
+    compareCandleNotOk
 ) => {
     updateRunning(true);
 
     var newArr = [...array];
-    console.log("hello");
+    console.log("bubbleSort");
     console.log(newArr);
 
     for (let i = 0; i < newArr.length; i++) {
