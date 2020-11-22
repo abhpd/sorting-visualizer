@@ -10,7 +10,10 @@ import bubbleSort from './../algorithms/sortingAlgos/bubbleSort';
 import { bubbleSortDispatcher } from "./../redux/dispatchers/bubbleSortDispatcher";
 
 import selectionSort from './../algorithms/sortingAlgos/selectionSort';
-import { selectionSortDispatcher } from "./../redux/dispatchers/selectionSortDispatcher"
+import { selectionSortDispatcher } from "./../redux/dispatchers/selectionSortDispatcher";
+
+import insertionSort from './../algorithms/sortingAlgos/insertionSort';
+import { insertionSortDispatcher } from "./../redux/dispatchers/insertionSortDispatcher";
 
 
 //Importing actions
@@ -83,6 +86,17 @@ class ControlWindow extends Component {
             break;
             case "selectionSort":
                 this.props.runSelectionSort(
+                    this.props.updateRunning,
+                    this.props.delay,
+                    this.props.arr,
+                    this.props.selectionSort.sortedCandle,
+                    this.props.selectionSort.compareCandle,
+                    this.props.selectionSort.compareCandleOk,
+                    this.props.selectionSort.compareCandleNotOk
+                );
+            break;
+            case "insertionSort":
+                this.props.runInsertionSort(
                     this.props.updateRunning,
                     this.props.delay,
                     this.props.arr,
@@ -205,6 +219,22 @@ const mapDispatchToProps = (dispatch) => {
             );
         },
         selectionSort: selectionSortDispatcher(dispatch),
+
+        //Insertion Sort
+        runInsertionSort : (updateRunning, delay, array,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            ) => {
+            insertionSort(updateRunning, delay, array, dispatch,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            );
+        },
+        insertionSort: insertionSortDispatcher(dispatch),
     }
 }
 

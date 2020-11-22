@@ -39,6 +39,20 @@ class DisplayWindow extends Component {
                     return "DodgerBlue";
                 } else return "DarkSlateGray";
 
+            case "insertionSort":
+                if (indx === this.props.selectionSort.compareCandleOk[0] || indx === this.props.selectionSort.compareCandleOk[1]) {
+                    return "green";
+                } else if (
+                    indx === this.props.selectionSort.compareCandleNotOk[0] ||
+                    indx === this.props.selectionSort.compareCandleNotOk[1]
+                ){
+                    return "red";
+                } else if (indx <= this.props.selectionSort.sortedCandle) {
+                    return "blue";
+                } else if (indx === this.props.selectionSort.compareCandle[0] || indx === this.props.selectionSort.compareCandle[1]) {
+                    return "DodgerBlue";
+                } else return "DarkSlateGray";
+
             default:
                 return "DarkSlateGray";
         }
