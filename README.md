@@ -25,4 +25,4 @@
 
 ---
 
-#### End of README
+#### <center>End of README</center>
