@@ -40,16 +40,44 @@ class DisplayWindow extends Component {
                 } else return "DarkSlateGray";
 
             case "insertionSort":
-                if (indx === this.props.selectionSort.compareCandleOk[0] || indx === this.props.selectionSort.compareCandleOk[1]) {
+                if (indx === this.props.insertionSort.compareCandleOk[0] || indx === this.props.insertionSort.compareCandleOk[1]) {
                     return "green";
                 } else if (
-                    indx === this.props.selectionSort.compareCandleNotOk[0] ||
-                    indx === this.props.selectionSort.compareCandleNotOk[1]
+                    indx === this.props.insertionSort.compareCandleNotOk[0] ||
+                    indx === this.props.insertionSort.compareCandleNotOk[1]
                 ){
                     return "red";
-                } else if (indx <= this.props.selectionSort.sortedCandle) {
+                } else if (indx <= this.props.insertionSort.sortedCandle) {
                     return "blue";
-                } else if (indx === this.props.selectionSort.compareCandle[0] || indx === this.props.selectionSort.compareCandle[1]) {
+                } else if (indx === this.props.insertionSort.compareCandle[0] || indx === this.props.insertionSort.compareCandle[1]) {
+                    return "DodgerBlue";
+                } else return "DarkSlateGray";
+
+            case "mergeSort":
+                if (indx === this.props.mergeSort.compareCandleOk[0] || indx === this.props.mergeSort.compareCandleOk[1]) {
+                    return "green";
+                } else if (
+                    indx === this.props.mergeSort.compareCandleNotOk[0] ||
+                    indx === this.props.mergeSort.compareCandleNotOk[1]
+                ){
+                    return "red";
+                } else if (indx <= this.props.mergeSort.sortedCandle) {
+                    return "blue";
+                } else if (indx === this.props.mergeSort.compareCandle[0] || indx === this.props.mergeSort.compareCandle[1]) {
+                    return "DodgerBlue";
+                } else return "DarkSlateGray";
+
+            case "quickSort":
+                if (indx === this.props.quickSort.compareCandleOk[0] || indx === this.props.quickSort.compareCandleOk[1]) {
+                    return "green";
+                } else if (
+                    indx === this.props.quickSort.compareCandleNotOk[0] ||
+                    indx === this.props.quickSort.compareCandleNotOk[1]
+                ){
+                    return "red";
+                } else if (indx <= this.props.quickSort.sortedCandle) {
+                    return "blue";
+                } else if (indx === this.props.quickSort.compareCandle[0] || indx === this.props.quickSort.compareCandle[1]) {
                     return "DodgerBlue";
                 } else return "DarkSlateGray";
 
@@ -96,6 +124,27 @@ const mapStateToProps = (state) => {
             compareCandleOk: state.selectionReducer.compareCandleOk,
             compareCandleNotOk: state.selectionReducer.compareCandleNotOk,
             sortedCandle: state.selectionReducer.sortedCandle,
+        },
+
+        insertionSort: {
+            compareCandle: state.insertionReducer.compareCandle,
+            compareCandleOk: state.insertionReducer.compareCandleOk,
+            compareCandleNotOk: state.insertionReducer.compareCandleNotOk,
+            sortedCandle: state.insertionReducer.sortedCandle,
+        },
+
+        mergeSort: {
+            compareCandle: state.mergeReducer.compareCandle,
+            compareCandleOk: state.mergeReducer.compareCandleOk,
+            compareCandleNotOk: state.mergeReducer.compareCandleNotOk,
+            sortedCandle: state.mergeReducer.sortedCandle,
+        },
+
+        quickSort: {
+            compareCandle: state.quickReducer.compareCandle,
+            compareCandleOk: state.quickReducer.compareCandleOk,
+            compareCandleNotOk: state.quickReducer.compareCandleNotOk,
+            sortedCandle: state.quickReducer.sortedCandle,
         }
     }
 }

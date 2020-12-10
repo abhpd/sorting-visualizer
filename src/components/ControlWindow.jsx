@@ -15,6 +15,12 @@ import { selectionSortDispatcher } from "./../redux/dispatchers/selectionSortDis
 import insertionSort from './../algorithms/sortingAlgos/insertionSort';
 import { insertionSortDispatcher } from "./../redux/dispatchers/insertionSortDispatcher";
 
+import mergeSort from './../algorithms/sortingAlgos/mergeSort';
+import { mergeSortDispatcher } from './../redux/dispatchers/mergeSortDispatcher';
+
+import quickSort from './../algorithms/sortingAlgos/quickSort';
+import { quickSortDispatcher } from './../redux/dispatchers/quickSortDispatcher';
+
 
 //Importing actions
 import { updateArray } from './../redux/actions/updateArray';
@@ -106,6 +112,28 @@ class ControlWindow extends Component {
                     this.props.selectionSort.compareCandleNotOk
                 );
             break;
+            case "mergeSort":
+                this.props.runMergeSort(
+                    this.props.updateRunning,
+                    this.props.delay,
+                    this.props.arr,
+                    this.props.selectionSort.sortedCandle,
+                    this.props.selectionSort.compareCandle,
+                    this.props.selectionSort.compareCandleOk,
+                    this.props.selectionSort.compareCandleNotOk
+                );
+            break;
+            case "quickSort":
+                this.props.runQuickSort(
+                    this.props.updateRunning,
+                    this.props.delay,
+                    this.props.arr,
+                    this.props.selectionSort.sortedCandle,
+                    this.props.selectionSort.compareCandle,
+                    this.props.selectionSort.compareCandleOk,
+                    this.props.selectionSort.compareCandleNotOk
+                );
+            break;
             default:
                 console.log("Algo name error");
         }
@@ -149,6 +177,8 @@ class ControlWindow extends Component {
                     <option value="bubbleSort">Bubble Sort</option>
                     <option value="selectionSort">Selection Sort</option>
                     <option value="insertionSort">Insertion Sort</option>
+                    <option value="mergeSort">Merge Sort</option>
+                    <option value="quickSort">Quick Sort</option>
                 </select>
 
                 <button 
@@ -235,6 +265,38 @@ const mapDispatchToProps = (dispatch) => {
             );
         },
         insertionSort: insertionSortDispatcher(dispatch),
+
+        //Merge Sort
+        runMergeSort : (updateRunning, delay, array,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            ) => {
+            mergeSort(updateRunning, delay, array, dispatch,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            );
+        },
+        mergeSort: mergeSortDispatcher(dispatch),
+
+        //Quick Sort
+        runQuickSort : (updateRunning, delay, array,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            ) => {
+            quickSort(updateRunning, delay, array, dispatch,
+                sortedCandle,
+                compareCandle,
+                compareCandleOk,
+                compareCandleNotOk
+            );
+        },
+        quickSort: quickSortDispatcher(dispatch),
     }
 }
 
