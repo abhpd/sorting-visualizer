@@ -3,6 +3,7 @@ import {
     updateCompareCandle,
     updateCompareCandleOk,
     updateCompareCandleNotOk,
+    updateCurrentPivot,
 } from "./../actions/quickSort";
 
 export const quickSortDispatcher = (dispatch) => {
@@ -18,6 +19,9 @@ export const quickSortDispatcher = (dispatch) => {
         },
         compareCandleNotOk: (value) => {
             dispatch(updateCompareCandleNotOk(value));
+        },
+        currentPivot: (value) => {
+            dispatch(updateCurrentPivot(value));
         },
     };
 };

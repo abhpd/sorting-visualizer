@@ -2,6 +2,7 @@ export const COMPARE_CANDLE = "COMPARE_CANDLE";
 export const COMPARE_CANDLE_OK = "COMPARE_CANDLE_OK";
 export const COMPARE_CANDLE_NOT_OK = "COMPARE_CANDLE_NOT_OK";
 export const SORTED_CANDLE = "SORTED_CANDLE";
+export const CURRENT_PIVOT = "CURRENT_PIVOT";
 
 export const updateCompareCandle = (payload) => {
     return {
@@ -28,6 +29,13 @@ export const updateSortedCandle = (payload) => {
     console.log("==" + payload);
     return {
         type: SORTED_CANDLE,
+        payload: payload,
+    };
+};
+
+export const updateCurrentPivot = (payload) => {
+    return {
+        type: CURRENT_PIVOT,
         payload: payload,
     };
 };

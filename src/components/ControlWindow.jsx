@@ -106,10 +106,10 @@ class ControlWindow extends Component {
                     this.props.updateRunning,
                     this.props.delay,
                     this.props.arr,
-                    this.props.selectionSort.sortedCandle,
-                    this.props.selectionSort.compareCandle,
-                    this.props.selectionSort.compareCandleOk,
-                    this.props.selectionSort.compareCandleNotOk
+                    this.props.insertionSort.sortedCandle,
+                    this.props.insertionSort.compareCandle,
+                    this.props.insertionSort.compareCandleOk,
+                    this.props.insertionSort.compareCandleNotOk
                 );
             break;
             case "mergeSort":
@@ -117,10 +117,10 @@ class ControlWindow extends Component {
                     this.props.updateRunning,
                     this.props.delay,
                     this.props.arr,
-                    this.props.selectionSort.sortedCandle,
-                    this.props.selectionSort.compareCandle,
-                    this.props.selectionSort.compareCandleOk,
-                    this.props.selectionSort.compareCandleNotOk
+                    this.props.mergeSort.sortedCandle,
+                    this.props.mergeSort.compareCandle,
+                    this.props.mergeSort.compareCandleOk,
+                    this.props.mergeSort.compareCandleNotOk
                 );
             break;
             case "quickSort":
@@ -128,10 +128,11 @@ class ControlWindow extends Component {
                     this.props.updateRunning,
                     this.props.delay,
                     this.props.arr,
-                    this.props.selectionSort.sortedCandle,
-                    this.props.selectionSort.compareCandle,
-                    this.props.selectionSort.compareCandleOk,
-                    this.props.selectionSort.compareCandleNotOk
+                    this.props.quickSort.sortedCandle,
+                    this.props.quickSort.compareCandle,
+                    this.props.quickSort.compareCandleOk,
+                    this.props.quickSort.compareCandleNotOk,
+                    this.props.quickSort.currentPivot,
                 );
             break;
             default:
@@ -287,13 +288,15 @@ const mapDispatchToProps = (dispatch) => {
                 sortedCandle,
                 compareCandle,
                 compareCandleOk,
-                compareCandleNotOk
+                compareCandleNotOk,
+                currentPivot
             ) => {
             quickSort(updateRunning, delay, array, dispatch,
                 sortedCandle,
                 compareCandle,
                 compareCandleOk,
-                compareCandleNotOk
+                compareCandleNotOk,
+                currentPivot
             );
         },
         quickSort: quickSortDispatcher(dispatch),

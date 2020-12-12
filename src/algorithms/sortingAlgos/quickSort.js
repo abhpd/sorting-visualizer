@@ -1,36 +1,121 @@
 import { updateArray } from "./../../redux/actions/updateArray";
 import { delay } from "./../helpers/delayer";
 
-function getPivot(arr, l, r) {
+const getPivot = async (
+    arr,
+    l,
+    r,
+    dispatch,
+    delay_time,
+    sortedCandle,
+    compareCandle,
+    compareCandleOk,
+    compareCandleNotOk,
+    currentPivot
+) => {
     const pi = r;
+    currentPivot(pi);
 
     let cur = l - 1;
 
     for (let i = l; i <= r; i++) {
+        compareCandle([cur, i]);
+        dispatch(updateArray({ arr: arr.map((e) => e) }));
+        await delay(delay_time);
+
         if (arr[i] < arr[pi]) {
             cur++;
+
+            compareCandle([-1, -1]);
+            compareCandleNotOk([cur, i]);
+            dispatch(updateArray({ arr: arr.map((e) => e) }));
+            await delay(delay_time);
+
             [arr[cur], arr[i]] = [arr[i], arr[cur]];
+
+            compareCandleNotOk([-1, -1]);
+            compareCandleOk([cur, i]);
+            dispatch(updateArray({ arr: arr.map((e) => e) }));
+            await delay(delay_time);
         }
+
+        compareCandleOk([-1, -1]);
     }
 
     cur++;
+
+    currentPivot(-1);
+    compareCandle([-1, -1]);
+    compareCandleNotOk([cur, pi]);
+    dispatch(updateArray({ arr: arr.map((e) => e) }));
+    await delay(delay_time);
+
     [arr[cur], arr[pi]] = [arr[pi], arr[cur]];
 
-    return cur;
-}
+    compareCandleNotOk([-1, -1]);
+    compareCandleOk([cur, pi]);
+    dispatch(updateArray({ arr: arr.map((e) => e) }));
+    await delay(delay_time);
+    compareCandleOk([-1, -1]);
 
-function recursiveQuickSort(arr, l, r) {
+    return cur;
+};
+
+const recursiveQuickSort = async (
+    arr,
+    l,
+    r,
+    dispatch,
+    delay_time,
+    sortedCandle,
+    compareCandle,
+    compareCandleOk,
+    compareCandleNotOk,
+    currentPivot
+) => {
     if (l >= r) {
         return;
     }
+    const pivot = await getPivot(
+        arr,
+        l,
+        r,
+        dispatch,
+        delay_time,
+        sortedCandle,
+        compareCandle,
+        compareCandleOk,
+        compareCandleNotOk,
+        currentPivot
+    );
 
-    const pivot = getPivot(arr, l, r);
+    await recursiveQuickSort(
+        arr,
+        l,
+        pivot - 1,
+        dispatch,
+        delay_time,
+        sortedCandle,
+        compareCandle,
+        compareCandleOk,
+        compareCandleNotOk,
+        currentPivot
+    );
+    await recursiveQuickSort(
+        arr,
+        pivot + 1,
+        r,
+        dispatch,
+        delay_time,
+        sortedCandle,
+        compareCandle,
+        compareCandleOk,
+        compareCandleNotOk,
+        currentPivot
+    );
 
-    recursiveQuickSort(arr, l, pivot - 1);
-    recursiveQuickSort(arr, pivot + 1, r);
-
-    console.log(arr);
-}
+    return Promise.resolve(0);
+};
 
 const quickSort = async (
     updateRunning,
@@ -40,10 +125,22 @@ const quickSort = async (
     sortedCandle,
     compareCandle,
     compareCandleOk,
-    compareCandleNotOk
+    compareCandleNotOk,
+    currentPivot
 ) => {
     updateRunning(true);
-    recursiveQuickSort(array, 0, array.length - 1);
+    await recursiveQuickSort(
+        array,
+        0,
+        array.length - 1,
+        dispatch,
+        delay_time,
+        sortedCandle,
+        compareCandle,
+        compareCandleOk,
+        compareCandleNotOk,
+        currentPivot
+    );
 
     sortedCandle(array.length);
     dispatch(updateArray({ arr: array.map((e) => e) }));

@@ -3,6 +3,7 @@ import {
     COMPARE_CANDLE_OK,
     COMPARE_CANDLE_NOT_OK,
     SORTED_CANDLE,
+    CURRENT_PIVOT,
 } from "./../../actions/quickSort";
 
 const defaultState = {
@@ -10,6 +11,7 @@ const defaultState = {
     compareCandleOk: [-1, -1],
     compareCandleNotOk: [-1, -1],
     sortedCandle: -1,
+    currentPivot: -1,
 };
 
 const quickReducer = (state = defaultState, action) => {
@@ -34,6 +36,9 @@ const quickReducer = (state = defaultState, action) => {
 
             // -- Solution 2
             // return { ...state, ...{ sortedCandle: action.payload } };
+        }
+        case CURRENT_PIVOT: {
+            return Object.assign(state, { currentPivot: action.payload });
         }
         default:
             return state;

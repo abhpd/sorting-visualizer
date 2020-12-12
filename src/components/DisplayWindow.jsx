@@ -63,12 +63,15 @@ class DisplayWindow extends Component {
                     return "red";
                 } else if (indx <= this.props.mergeSort.sortedCandle) {
                     return "blue";
-                } else if (indx === this.props.mergeSort.compareCandle[0] || indx === this.props.mergeSort.compareCandle[1]) {
+                } else if (indx >= this.props.mergeSort.compareCandle[0] && indx <= this.props.mergeSort.compareCandle[1]) {
                     return "DodgerBlue";
                 } else return "DarkSlateGray";
 
             case "quickSort":
-                if (indx === this.props.quickSort.compareCandleOk[0] || indx === this.props.quickSort.compareCandleOk[1]) {
+                if(indx===this.props.quickSort.currentPivot){
+                    return "violet";
+                }
+                else if (indx === this.props.quickSort.compareCandleOk[0] || indx === this.props.quickSort.compareCandleOk[1]) {
                     return "green";
                 } else if (
                     indx === this.props.quickSort.compareCandleNotOk[0] ||
@@ -145,6 +148,7 @@ const mapStateToProps = (state) => {
             compareCandleOk: state.quickReducer.compareCandleOk,
             compareCandleNotOk: state.quickReducer.compareCandleNotOk,
             sortedCandle: state.quickReducer.sortedCandle,
+            currentPivot: state.quickReducer.currentPivot,
         }
     }
 }
