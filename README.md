@@ -11,8 +11,8 @@
 |Bubble Sort| ✅ |
 |Selection Sort| ✅ |
 |Insertion Sort| ✅ |
-|Merge Sort| ❌ |
-|Quick Sort| ❌ |
+|Merge Sort| ✅ |
+|Quick Sort| ✅ |
 
 ---
 
